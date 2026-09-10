@@ -86,7 +86,7 @@ function Header({ route, count }: { route: Route; count: number }) {
     <Logo />
     <nav aria-label="ناوبری اصلی">{links.map(([r, label]) => <button key={r} className={route === r || (route === "cart" && r === "store") || (route === "panel" && r === "store") ? "active" : ""} onClick={() => go(r)}>{label}{r === "store" && <span className="nav-chevron">⌄</span>}</button>)}</nav>
     <div className="header-actions">
-      <button className="head-icon" aria-label="جستجو"><Icon name="search" size={26}/></button>
+      <button className="head-icon" onClick={() => go("store")} aria-label="جستجو"><Icon name="search" size={26}/></button>
       <button className="head-icon" aria-label="حساب کاربری" onClick={() => go("login")}><Icon name="user" size={26}/></button>
       <button className="head-icon cart-button" aria-label="سبد خرید" onClick={() => go("cart")}><Icon name="cart" size={27}/><span>{count}</span></button>
       <button className="consult-btn" onClick={() => go("contact")}><Icon name="headset" size={21}/>مشاوره خرید</button>
@@ -112,7 +112,7 @@ function Footer() {
       <div className="shell footer-grid">
         <section className="footer-brand"><img src="/ref-assets/logo-wide.png" alt="Petokio"/><p>پت‌اوکیو، همراه همیشگی شما برای تغذیه بهتر و حال خوب سگ‌ها و گربه‌های دوست‌داشتنی‌تان 🧡</p><div className="socials"><span>◎</span><span>➤</span><span>◉</span><span>◌</span></div></section>
         <section><h4>دسترسی سریع</h4><button onClick={() => go("store")}>فروشگاه</button><button onClick={() => go("about")}>درباره ما</button><button onClick={() => go("contact")}>تماس با ما</button><button onClick={() => go("contact")}>مشاوره خرید</button></section>
-        <section><h4>راهنمای مشتری</h4><button>سوالات متداول</button><button>روش‌های پرداخت</button><button>شرایط بازگشت کالا</button><button>حریم خصوصی</button></section>
+        <section><h4>راهنمای مشتری</h4><button>سؤالات متداول</button><button>روش‌های پرداخت</button><button>شرایط بازگشت کالا</button><button>حریم خصوصی</button></section>
         <section className="license"><h4>نمادها و مجوزها</h4><div><span>e<br/><small>نماد اعتماد</small></span><span>◉<br/><small>ساماندهی</small></span><span>V<br/><small>اتحادیه</small></span></div></section>
       </div>
       <div className="copyright">© تمامی حقوق این وب‌سایت متعلق به پت‌اوکیو است.</div>
@@ -125,7 +125,7 @@ function ProductCard({ product, onAdd, compact = false }: { product: Product; on
     <button className="heart-button" aria-label="افزودن به علاقه‌مندی"><Icon name="heart" size={19}/></button>
     {product.badge && <span className="sale-badge">{product.badge}</span>}
     <div className="product-image"><img src={product.image} alt={product.name}/></div>
-    <h3>{product.name}</h3>
+    <h3><bdi>{product.name}</bdi></h3>
     <p>{product.weight}</p>
     <div className="product-price"><strong>{money(product.price)}</strong>{product.oldPrice && <del>{money(product.oldPrice)}</del>}</div>
     <button className="primary-btn add-btn" onClick={() => onAdd(product)}><Icon name="cart" size={18}/>افزودن به سبد خرید</button>
@@ -139,8 +139,8 @@ function Home({ onAdd }: { onAdd: (p: Product) => void }) {
       <section className="home-hero">
         <div className="hero-art"><img src="/ref-assets/hero_art.png" alt="سگ و گربه پت اوکیو"/></div>
         <div className="hero-copy">
-          <h1>حال خوب پت شما از<br/>تغذیه خوب شروع میشه</h1>
-          <p>غذای خوب، برند مطمئن و راهنمایی تخصصی برای پت شما</p>
+          <h1>حال خوب پت شما از<br/>تغذیهٔ خوب شروع می‌شود</h1>
+          <p>غذای باکیفیت از برندهای معتبر، با راهنمایی برای انتخاب غذای مناسب پت شما</p>
           <div className="hero-actions"><button className="primary-btn" onClick={() => go("store")}><Icon name="cart" size={18}/>مشاهده فروشگاه</button><button className="secondary-btn" onClick={() => go("contact")}><Icon name="headset" size={19}/>مشاوره خرید</button></div>
           <div className="hero-trust"><span><Icon name="shield" size={20}/>تضمین اصالت کالا</span><span><Icon name="truck" size={20}/>ارسال سریع</span><span><Icon name="headset" size={20}/>مشاوره تخصصی</span></div>
         </div>
@@ -171,7 +171,7 @@ function Store({ onAdd }: { onAdd: (p: Product) => void }) {
   return <>
     <main className="store-page shell">
       <section className="store-hero"><div className="store-art"><img src="/ref-assets/store-scene.png" alt="سگ و گربه"/></div><div><div className="crumb">صفحه اصلی　/　فروشگاه <Icon name="home" size={16}/></div><h1>فروشگاه پت‌اوکیو</h1><p>غذای باکیفیت برای سگ‌ها و گربه‌ها</p></div></section>
-      <section className="store-toolbar"><div className="search-field"><Icon name="search" size={23}/><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="جستجو در محصولات..."/></div><span>۲۴ محصول</span><select aria-label="مرتب‌سازی"><option>مرتب‌سازی:　پرفروش‌ترین</option><option>ارزان‌ترین</option><option>گران‌ترین</option></select><button className="filter-mobile">☷ فیلترها</button></section>
+      <section className="store-toolbar"><div className="search-field"><Icon name="search" size={23}/><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="جستجو در محصولات..."/></div><span>{new Intl.NumberFormat("fa-IR").format(shown.length)} محصول</span><select aria-label="مرتب‌سازی"><option>مرتب‌سازی:　پرفروش‌ترین</option><option>ارزان‌ترین</option><option>گران‌ترین</option></select><button className="filter-mobile">☷ فیلترها</button></section>
       <div className="store-layout">
         <aside className="filters">
           <FilterTitle>دسته‌بندی</FilterTitle>
@@ -195,14 +195,14 @@ function Store({ onAdd }: { onAdd: (p: Product) => void }) {
 function FilterTitle({ children }: { children: ReactNode }) { return <h3><Icon name="paw" size={19}/>{children}</h3>; }
 
 function Cart({ items, setItems, onAdd }: { items: Product[]; setItems: (p: Product[]) => void; onAdd: (p: Product) => void }) {
-  const cartItems = items.length ? items.slice(0, 3) : products.slice(0, 3);
-  const total = cartItems.reduce((s, p) => s + p.price, 0);
+  const cartItems = items.filter((p, index) => items.findIndex((item) => item.id === p.id) === index);
+  const total = items.reduce((s, p) => s + p.price, 0);
   return <>
     <main className="cart-page shell">
-      <div className="cart-heading"><div className="crumb">صفحه اصلی　/　فروشگاه　/　سبد خرید</div><h1><Icon name="paw" size={35}/>سبد خرید شما</h1><p>محصولات انتخابی پت شما همین‌جاست</p></div>
+      <div className="cart-heading"><div className="crumb">صفحه اصلی　/　فروشگاه　/　سبد خرید</div><h1><Icon name="paw" size={35}/>سبد خرید شما</h1><p>محصولات انتخابی را مرور کنید و تعداد مورد نیاز را تغییر دهید.</p></div>
       <div className="cart-layout">
-        <section className="cart-table"><div className="cart-table-head"><span>محصول</span><span>قیمت واحد</span><span>تعداد</span><span>مجموع</span><span>حذف</span></div>{cartItems.map((p, index) => <div className="cart-row" key={`${p.id}-${index}`}><div className="cart-product"><img src={p.image} alt={p.name}/><span><b>{p.name}</b><small>وزن {p.weight}</small><em>{index === 1 ? "حاوی مرغ تازه" : "مناسب نژادهای کوچک"}</em></span></div><strong>{money(p.price)}</strong><div className="qty"><button>+</button><span>۱</span><button>−</button></div><strong>{money(p.price)}</strong><div className="cart-remove"><button onClick={() => setItems(cartItems.filter((_, i) => i !== index))}>⌫</button><button><Icon name="heart" size={19}/></button></div></div>)}</section>
-        <aside className="cart-summary"><h2>خلاصه سفارش　▧</h2><p><span>مجموع کالاها</span><b>{money(total)}</b></p><p className="green-text"><span>تخفیف</span><b>− ۳۰۰,۰۰۰ تومان</b></p><p className="green-text"><span>هزینه ارسال</span><b>رایگان</b></p><hr/><h3><span>مبلغ نهایی</span><b>{money(Math.max(0, total - 300000))}</b></h3><label>کد تخفیف<div><input placeholder="کد تخفیف خود را وارد کنید"/><button>اعمال</button></div></label><button className="primary-btn full">ادامه فرآیند خرید　‹</button><button className="secondary-btn full" onClick={() => go("store")}>ادامه خرید　<Icon name="lock" size={17}/></button><small className="summary-note"><Icon name="shield" size={16}/>پرداخت امن و تضمین اصالت کالا</small></aside>
+        <section className="cart-table"><div className="cart-table-head"><span>محصول</span><span>قیمت واحد</span><span>تعداد</span><span>مجموع</span><span>حذف</span></div>{cartItems.map((p, index) => <div className="cart-row" key={`${p.id}-${index}`}><div className="cart-product"><img src={p.image} alt={p.name}/><span><b>{p.name}</b><small>وزن {p.weight}</small><em>{index === 1 ? "حاوی مرغ تازه" : "مناسب نژادهای کوچک"}</em></span></div><strong>{money(p.price)}</strong><div className="qty"><button aria-label={`افزایش تعداد ${p.name}`} onClick={() => setItems([...items, p])}>+</button><span>{new Intl.NumberFormat("fa-IR").format(items.filter((item) => item.id === p.id).length)}</span><button aria-label={`کاهش تعداد ${p.name}`} onClick={() => setItems(items.filter((_, i) => i !== items.findIndex((item) => item.id === p.id)))}>−</button></div><strong>{money(p.price * items.filter((item) => item.id === p.id).length)}</strong><div className="cart-remove"><button aria-label={`حذف ${p.name}`} onClick={() => setItems(items.filter((item) => item.id !== p.id))}>⌫</button><button><Icon name="heart" size={19}/></button></div></div>)}</section>
+        <aside className="cart-summary"><h2>خلاصه سفارش　▧</h2><p><span>مجموع کالاها</span><b>{money(total)}</b></p><p className="green-text"><span>تخفیف</span><b>− ۳۰۰,۰۰۰ تومان</b></p><p className="green-text"><span>هزینه ارسال</span><b>رایگان</b></p><hr/><h3><span>مبلغ نهایی</span><b>{money(Math.max(0, total - 300000))}</b></h3><label>کد تخفیف<div><input placeholder="کد تخفیف خود را وارد کنید"/><button>اعمال</button></div></label><button className="primary-btn full">ادامهٔ فرایند خرید　‹</button><button className="secondary-btn full" onClick={() => go("store")}>ادامه خرید　<Icon name="lock" size={17}/></button><small className="summary-note"><Icon name="shield" size={16}/>پرداخت امن و تضمین اصالت کالا</small></aside>
       </div>
       <section className="cart-recommend"><div className="cart-consult-art"><img src="/ref-assets/cart-consult.png" alt="مشاوره غذای پت"/></div><div><h3>برای انتخاب غذای مناسب پتت<br/>نیاز به راهنمایی داری؟</h3><button className="green-btn" onClick={() => go("contact")}><Icon name="headset" size={17}/>دریافت مشاوره خرید</button></div><div className="suggest-card"><ProductCard product={products[0]} onAdd={onAdd} compact/></div><div className="suggest-card"><ProductCard product={products[7]} onAdd={onAdd} compact/></div></section>
       <div className="empty-cart-banner"><span>اگر سبدت خالی شد، از فروشگاه شروع کن</span><small>صدها محصول باکیفیت برای سگ‌ها و گربه‌ها در انتظار پت شماست.</small><button className="secondary-btn" onClick={() => go("store")}>مشاهده فروشگاه ‹</button></div>

@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({children}:{children:React.ReactNode}){
-  return <html lang="fa" dir="rtl"><body>{children}</body></html>
+  return <html lang="fa" dir="rtl"><head><link rel="preload" href="/fonts/Vazirmatn.woff2" as="font" type="font/woff2" crossOrigin="anonymous" /></head><body>{children}</body></html>
 }
